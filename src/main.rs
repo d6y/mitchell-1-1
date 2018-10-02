@@ -61,15 +61,28 @@ fn evolve(
     let num_pairs = pop_size / 2; // TODO: handle odd pop_size
     for _ in 0..num_pairs {
         let (mum, dad) = select(&pop, &fitness);
-        let (child1, child2) = if random::<f32>() <= crossover_rate {
+        let (mut child1, mut child2) = if random::<f32>() <= crossover_rate {
             crossover(mum, dad)
         } else {
             (mum.clone(), dad.clone())
         };
+
+        mutate(&mut child1, mutation_rate);
+        mutate(&mut child2, mutation_rate);
+
         next_pop.push(child1);
         next_pop.push(child2);
     }
     next_pop
+}
+
+fn mutate(ind: &mut Individual, rate: f32) {
+    let mut rng = thread_rng();
+    for i in 0..ind.len() {
+        if rng.gen::<f32>() <= rate {
+            ind[i] = !ind[i];
+        }
+    }
 }
 
 fn crossover(mum: &Individual, dad: &Individual) -> (Individual, Individual) {
@@ -136,6 +149,7 @@ fn main() {
         let mut population = random_population(pop_size, chromosome_length);
         loop {
             let scores = evaluate(&population, fitness);
+            // show_population(run, gen, &population, &scores);
             match solved(&scores) {
                 true => {
                     show_population(run, gen, &population, &scores);
