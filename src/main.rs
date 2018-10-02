@@ -50,7 +50,7 @@ fn show_population(run_num: usize, gen_num: usize, pop: &Population, fitness: &V
 }
 
 fn evolve(
-    pop: Population,
+    pop: &Population,
     fitness: &PopulationFitness,
     crossover_rate: f32,
     mutation_rate: f32,
@@ -122,7 +122,7 @@ fn select<'p>(
 fn spin_index(fitness: &PopulationFitness, max: usize) -> usize {
     let mut total = 0;
     for (i, v) in fitness.iter().enumerate() {
-        total = total + v;
+        total += v;
         if total >= max {
             return i;
         }
@@ -145,8 +145,8 @@ fn main() {
 
     let verbose = false;
 
-    if verbose { 
-        println!("run,gen,individual,average fitness,individual fitness, indivdial"); 
+    if verbose {
+        println!("run,gen,individual,average fitness,individual fitness, indivdial");
     } else {
         println!("run,generation");
     };
@@ -157,19 +157,16 @@ fn main() {
         loop {
             let scores = evaluate(&population, fitness);
             // show_population(run, gen, &population, &scores);
-            match solved(&scores) {
-                true => {
-                    if verbose { 
-                        show_population(run, gen, &population, &scores); 
-                    } else {
-                        println!("{},{}", run, gen);
-                    }
-                    break;
+            if solved(&scores) {
+                if verbose {
+                    show_population(run, gen, &population, &scores);
+                } else {
+                    println!("{},{}", run, gen);
                 }
-                false => {
-                    gen = gen + 1;
-                    population = evolve(population, &scores, crossover_rate, mutation_rate);
-                }
+                break;
+            } else {
+                gen += 1;
+                population = evolve(&population, &scores, crossover_rate, mutation_rate);
             }
         }
     }
