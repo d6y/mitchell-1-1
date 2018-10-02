@@ -15,7 +15,7 @@ Perform 20 runs, and measure the average generation at which the string of all o
 By default 20 runs are made, and the output shows which generation the solution was found in:
 
 ```
-cargo run
+$ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.05s
      Running `target/debug/mitchell-1-1`
 run,generation
@@ -41,3 +41,36 @@ run,generation
 ```
 
 Verbose output (flag in the source) shows the details of every generation in every run.
+
+## Optimised run
+
+```
+$ cargo build --release
+
+$ time ./target/release/mitchell-1-1
+run,generation
+1,25
+2,20
+3,26
+4,15
+5,15
+6,19
+7,28
+8,26
+9,21
+10,20
+11,19
+12,49
+13,21
+14,23
+15,25
+16,32
+17,44
+18,19
+19,34
+20,40
+
+real    0m0.044s
+user    0m0.032s
+sys     0m0.008s
+```
