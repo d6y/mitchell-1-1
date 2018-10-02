@@ -1,0 +1,8 @@
+[package]
+name = "mitchell-1-1"
+version = "0.1.0"
+authors = ["Richard Dallaway <richard@dallaway.com>"]
+
+[dependencies]
+rand = "0.5.4"
+
