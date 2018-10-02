@@ -143,8 +143,15 @@ fn main() {
 
     let solved = |fitness: &PopulationFitness| fitness.iter().max() == Some(&chromosome_length);
 
-    println!("run,gen,individual,average fitness,individual fitness, indivdial");
-    for run in 1..20 {
+    let verbose = false;
+
+    if verbose { 
+        println!("run,gen,individual,average fitness,individual fitness, indivdial"); 
+    } else {
+        println!("run,generation");
+    };
+
+    for run in 1..21 {
         let mut gen = 0;
         let mut population = random_population(pop_size, chromosome_length);
         loop {
@@ -152,7 +159,11 @@ fn main() {
             // show_population(run, gen, &population, &scores);
             match solved(&scores) {
                 true => {
-                    show_population(run, gen, &population, &scores);
+                    if verbose { 
+                        show_population(run, gen, &population, &scores); 
+                    } else {
+                        println!("{},{}", run, gen);
+                    }
                     break;
                 }
                 false => {
