@@ -1,9 +1,14 @@
 # Basic GA
 
 Implementation of a basic GA from the first
-exercise in _An Introduction to Genetic Algorithms_ by Melanie Mitchell (p. 31).
+exercise in _An Introduction to Genetic Algorithms_ by Melanie Mitchell (p. 31):
 
-The problem is to evolve all 1s in a binary string.
+> "Implement a simple GA with fitness-proportionate selection,
+roulette-wheel sampling, population size 100, single-point crossover
+rate p_c = 0.7, and bitwise mutation rate p_m = 0.001.
+Try it on the following fitness function: f(x) = number of ones in x,
+where x is a chromosome of length 20.
+Perform 20 runs, and measure the average generation at which the string of all ones is discovered."
 
 ## Example run:
 
